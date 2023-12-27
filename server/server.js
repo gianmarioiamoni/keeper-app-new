@@ -51,10 +51,12 @@ app.route("/notes")
     
 })
     .post(async function (req, res) {
-        // const id = req.body.id;
         try {
             const savedDoc = await new Note({ title: req.body.title, content: req.body.content }).save()
-            const newId = (savedDoc._id.toString());
+
+            console.log("savedDoc = " + JSON.stringify(savedDoc));
+            // const newId = (savedDoc._id.toString());
+            const newId = (savedDoc._id);
             return res.status(201).json({
                 success: true,
                 id: newId,
