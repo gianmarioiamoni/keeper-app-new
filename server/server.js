@@ -35,6 +35,7 @@ const noteSchema = new mongoose.Schema(
 // create a new Model
 const Note = mongoose.model("Note", noteSchema);
 
+
 ////////////
 // Routes for generic notes
 //
@@ -54,8 +55,6 @@ app.route("/notes")
         try {
             const savedDoc = await new Note({ title: req.body.title, content: req.body.content }).save()
 
-            console.log("savedDoc = " + JSON.stringify(savedDoc));
-            // const newId = (savedDoc._id.toString());
             const newId = (savedDoc._id);
             return res.status(201).json({
                 success: true,
@@ -78,8 +77,6 @@ app.route("/notes/:id")
         console.log("**** app.route().put");
         console.log(req.body.title + " " + req.body.content + " " + req.body.oldTitle + " " + req.body.oldContent);
         console.log("id = " + req.params.id);
-        // Note.findOneAndReplace(
-        // { $and: [ { title: req.body.oldTitle }, { content: req.body.oldContent } ] },
         try {
             await Note.findByIdAndUpdate((req.params.id),
                 {
@@ -94,8 +91,6 @@ app.route("/notes/:id")
         }
     })
 .delete(async function(req, res) {
-    // Note.findOneAndDelete(
-    // { $and: [ { title: req.body.title }, { content: req.body.content } ] }
     console.log("deleting note id = " + req.params.id);
     try {
         await Note.findByIdAndDelete((req.params.id));
